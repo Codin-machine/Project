@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрация работы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .videos-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .video-block {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .video-block:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 соотношение */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-title {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .videos-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="videos-wrapper">
+            <!-- Видео 1: Перчатки -->
+            <div class="video-block">
+                <div class="video-container">
+                    <video controls>
+                        <source src="gloves.mp4" type="video/mp4">
+                        <source src="gloves.webm" type="video/webm">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-title">Работа перчатки в жизни</div>
+            </div>
+
+            <!-- Видео 2: Очки -->
+            <div class="video-block">
+                <div class="video-container">
+                    <video controls>
+                        <source src="glasses.mp4" type="video/mp4">
+                        <source src="glasses.webm" type="video/webm">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <div class="video-title">Работа очков в жизни</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
