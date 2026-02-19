@@ -5,201 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Демонстрация работы</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #f5f5f5;
+            --card: #fff;
+            --text: #333;
+            --shadow: rgba(0,0,0,0.1);
         }
-
+        .dark {
+            --bg: #1a1a1a;
+            --card: #2a2a2a;
+            --text: #fff;
+            --shadow: rgba(0,0,0,0.3);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; overflow: hidden; }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-            transition: background-color 0.3s ease;
+            background: var(--bg);
+            color: var(--text);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s;
         }
-
-        body.dark {
-            background-color: #1a1a1a;
-        }
-
-        .header {
+        header {
             text-align: center;
-            margin-bottom: 30px;
+            padding: 5px 0;
         }
-
         h1 {
-            color: #333;
-            margin-bottom: 20px;
+            font-size: clamp(14px, 3vw, 24px);
+            margin-bottom: 8px;
         }
-
-        body.dark h1 {
-            color: #fff;
-        }
-
-        /* Переключатель тем */
-        .theme-switch-wrapper {
+        .theme-toggle {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: clamp(12px, 2vw, 14px);
         }
-
-        .theme-switch {
+        .switch {
             position: relative;
-            width: 60px;
-            height: 30px;
+            width: 50px;
+            height: 26px;
         }
-
-        .theme-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
+        .switch input { display: none; }
+        .switch span {
             position: absolute;
+            inset: 0;
+            background: #ccc;
+            border-radius: 26px;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 30px;
+            transition: 0.3s;
         }
-
-        .slider:before {
-            position: absolute;
+        .switch span::before {
             content: "";
-            height: 22px;
-            width: 22px;
+            position: absolute;
+            width: 18px;
+            height: 18px;
             left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: 0.4s;
+            top: 4px;
+            background: #fff;
             border-radius: 50%;
+            transition: 0.3s;
         }
-
-        input:checked + .slider {
-            background-color: #2196F3;
+        .switch input:checked + span { background: #2196F3; }
+        .switch input:checked + span::before { transform: translateX(24px); }
+        main {
+            flex: 1;
+            display: flex;
+            gap: 15px;
+            padding: 10px 0;
+            min-height: 0;
         }
-
-        input:checked + .slider:before {
-            transform: translateX(30px);
-        }
-
-        .theme-label {
-            font-size: 16px;
-            color: #333;
-        }
-
-        body.dark .theme-label {
-            color: #fff;
-        }
-
-        /* Контейнер для видео */
-        .videos-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .video-block {
-            background: white;
-            padding: 20px;
+        .card {
+            flex: 1;
+            background: var(--card);
+            padding: 10px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
-
-        body.dark .video-block {
-            background: #2a2a2a;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        .video-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
         }
-
         video {
-            width: 100%;
-            height: auto;
+            max-width: 100%;
+            max-height: 100%;
             border-radius: 4px;
             background: #000;
         }
-
-        .video-title {
+        .title {
             text-align: center;
-            margin-top: 15px;
-            font-size: 18px;
+            padding-top: 8px;
+            font-size: clamp(12px, 2.5vw, 16px);
             font-weight: bold;
-            color: #333;
         }
-
-        body.dark .video-title {
-            color: #fff;
+        @media (max-width: 600px) and (orientation: portrait) {
+            main { flex-direction: column; gap: 10px; }
         }
-
-        /* Адаптив для телефонов */
-        @media (max-width: 768px) {
-            .videos-container {
-                grid-template-columns: 1fr;
-            }
+        @media (max-height: 500px) {
+            h1 { font-size: 14px; margin-bottom: 5px; }
+            .switch { width: 40px; height: 20px; }
+            .switch span::before { width: 14px; height: 14px; left: 3px; top: 3px; }
+            .switch input:checked + span::before { transform: translateX(18px); }
         }
     </style>
 </head>
 <body>
-    <div class="header">
+    <header>
         <h1>Демонстрация работы устройств</h1>
-        
-        <div class="theme-switch-wrapper">
-            <span class="theme-label">Светлая</span>
-            <label class="theme-switch">
-                <input type="checkbox" id="theme-toggle">
-                <span class="slider"></span>
+        <div class="theme-toggle">
+            <span>☀️</span>
+            <label class="switch">
+                <input type="checkbox" id="t">
+                <span></span>
             </label>
-            <span class="theme-label">Темная</span>
+            <span>🌙</span>
         </div>
-    </div>
+    </header>
 
-    <div class="videos-container">
-        <!-- Видео 1: Перчатки -->
-        <div class="video-block">
-            <video controls>
-                <source src="gloves.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
-            <div class="video-title">Работа перчатки в жизни</div>
+    <main>
+        <div class="card">
+            <div class="video-wrap">
+                <video controls src="gloves.mp4"></video>
+            </div>
+            <p class="title">Работа перчатки в жизни</p>
         </div>
 
-        <!-- Видео 2: Очки -->
-        <div class="video-block">
-            <video controls>
-                <source src="glasses.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
-            <div class="video-title">Работа очков в жизни</div>
+        <div class="card">
+            <div class="video-wrap">
+                <video controls src="glasses.mp4"></video>
+            </div>
+            <p class="title">Работа очков в жизни</p>
         </div>
-    </div>
+    </main>
 
     <script>
-        const toggleSwitch = document.getElementById('theme-toggle');
-        const body = document.body;
-
-        // Проверяем сохраненную тему
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            body.classList.add('dark');
-            toggleSwitch.checked = true;
-        }
-
-        // Переключение темы
-        toggleSwitch.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        });
+        const t = document.getElementById('t');
+        const d = document.body.classList;
+        
+        if (localStorage.theme === 'dark') { d.add('dark'); t.checked = true; }
+        
+        t.onchange = () => {
+            d.toggle('dark');
+            localStorage.theme = t.checked ? 'dark' : 'light';
+        };
     </script>
 </body>
 </html>
